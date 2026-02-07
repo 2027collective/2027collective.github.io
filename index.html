@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Development Paused | Uxidone</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0f172a;
+            color: #e2e8f0;
+            overflow-x: hidden;
+        }
+        
+        /* Subtle animated background pattern */
+        .bg-grid {
+            background-size: 40px 40px;
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+        }
+
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+        }
+
+        /* Industrial Hazard Stripe */
+        .hazard-stripe {
+            width: 100%;
+            height: 12px;
+            background: repeating-linear-gradient(
+                45deg,
+                #f59e0b,
+                #f59e0b 20px,
+                #1e293b 20px,
+                #1e293b 40px
+            );
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        @keyframes pulse-ring {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(234, 179, 8, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(234, 179, 8, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(234, 179, 8, 0); }
+        }
+        
+        .status-dot {
+            animation: pulse-ring 2s infinite;
+        }
+
+        .logo-container img {
+            filter: drop-shadow(0 0 8px rgba(245, 158, 11, 0.3));
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center relative">
+
+    <!-- Background Decoration -->
+    <div class="absolute inset-0 bg-grid z-0 opacity-40"></div>
+    <div class="absolute top-0 left-0 w-full h-full overflow-hidden z-0 pointer-events-none">
+        <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-500/10 rounded-full blur-[100px]"></div>
+        <div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-amber-500/10 rounded-full blur-[100px]"></div>
+    </div>
+
+    <!-- Main Content Card -->
+    <main class="relative z-10 w-full max-w-2xl mx-4 glass-panel rounded-xl shadow-2xl text-center">
+        
+        <!-- Hazard Bar -->
+        <div class="hazard-stripe"></div>
+
+        <div class="p-8 md:p-12">
+            <!-- Logo Section -->
+            <div class="flex justify-center mb-8 logo-container">
+                <img src="https://assets-uxidone.github.io/assets/Uxidone_logo_without_Uxidone_no_background.png" 
+                     alt="Uxidone Logo" 
+                     class="h-20 w-auto object-contain"
+                     onerror="this.style.display='none'; document.getElementById('fallback-icon').style.display='flex';">
+                
+                <!-- Fallback icon if image fails to load -->
+                <div id="fallback-icon" class="hidden p-4 rounded-full bg-slate-800/50 border border-slate-700 shadow-inner">
+                    <i data-lucide="hard-hat" class="w-12 h-12 text-amber-500"></i>
+                </div>
+            </div>
+
+            <!-- Status Badge -->
+            <div class="inline-flex items-center gap-3 px-4 py-1.5 rounded bg-slate-900/50 border border-slate-700 text-amber-500 text-xs font-mono tracking-widest uppercase mb-6">
+                <span class="w-2 h-2 rounded-full bg-amber-500 status-dot"></span>
+                Status: Maintenance Mode
+            </div>
+
+            <!-- Heading -->
+            <h1 class="text-3xl md:text-5xl font-bold mb-6 text-white tracking-tight">
+                SITE NOT FINISHED
+            </h1>
+
+            <!-- Message -->
+            <div class="text-base md:text-lg text-slate-400 mb-10 max-w-lg mx-auto leading-relaxed border-l-2 border-amber-500/30 pl-6 text-left bg-slate-800/30 py-4 pr-4 rounded-r-lg">
+                <span class="text-amber-500 font-mono text-sm block mb-2 uppercase tracking-wide">Notice // </span>
+                We're currently making some changes behind the scenes. Further development is officially on hold, with the return of development scheduled for <span class="text-white font-semibold underline decoration-amber-500/50">November 2026</span>.
+            </div>
+
+            <!-- Divider -->
+            <div class="w-full h-px bg-gradient-to-r from-transparent via-slate-600 to-transparent mb-10"></div>
+
+            <!-- Countdown Section -->
+            <div class="mb-10 bg-slate-900/40 rounded-lg p-6 border border-slate-800 inline-block w-full">
+                <p class="text-xs uppercase tracking-[0.2em] text-slate-500 font-bold mb-6 flex items-center justify-center gap-2">
+                    <i data-lucide="timer" class="w-3 h-3"></i> T-Minus to Resumption
+                </p>
+                <div class="text-2xl md:text-4xl font-mono text-amber-500 font-bold flex justify-center items-center gap-2 md:gap-6 flex-wrap" id="countdown">
+                    <span class="animate-pulse">Loading Data...</span>
+                </div>
+                <p class="text-[10px] text-slate-600 mt-4 font-mono uppercase tracking-widest">Target: Nov 1, 2026</p>
+            </div>
+
+            <!-- Action Button -->
+            <div class="flex flex-col sm:flex-row gap-4 justify-center mb-10">
+                <button onclick="copyEmail()" class="group relative px-8 py-3 rounded bg-amber-600 hover:bg-amber-500 transition-all text-white font-bold text-sm tracking-wide shadow-lg hover:shadow-amber-500/20 flex items-center justify-center gap-2 uppercase">
+                    <i data-lucide="mail" class="w-4 h-4 text-amber-100"></i>
+                    <span id="email-text">Inquire</span>
+                </button>
+                <button onclick="window.history.back()" class="px-8 py-3 rounded bg-transparent hover:bg-white/5 text-slate-400 hover:text-white transition-all border border-slate-700 hover:border-slate-500 font-medium text-sm tracking-wide uppercase font-mono">
+                    Go Back
+                </button>
+            </div>
+
+            <!-- Footer -->
+            <div class="pt-6 border-t border-slate-800/50">
+                <p class="text-xs text-slate-600 font-mono">
+                    &copy; 2026 Uxidone. All rights reserved.
+                </p>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="fixed bottom-8 left-1/2 transform -translate-x-1/2 bg-amber-600 text-white px-6 py-3 rounded shadow-xl translate-y-24 opacity-0 transition-all duration-300 flex items-center gap-3 z-50 font-mono text-sm border border-amber-400">
+        <i data-lucide="check-circle" class="w-4 h-4"></i>
+        <span>EMAIL COPIED</span>
+    </div>
+
+    <script>
+        // Initialize Icons
+        lucide.createIcons();
+
+        // Target Date: November 1, 2026
+        const targetDate = new Date('November 1, 2026 00:00:00').getTime();
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+
+            if (distance < 0) {
+                document.getElementById('countdown').innerHTML = "DEVELOPMENT RESUMED";
+                return;
+            }
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            const formatTime = (val, label) => `
+                <div class="flex flex-col items-center mx-2 md:mx-4">
+                    <span class="text-2xl md:text-4xl font-bold text-white tabular-nums">${String(val).padStart(2, '0')}</span>
+                    <span class="text-[10px] text-slate-500 uppercase font-normal mt-2 tracking-wider">${label}</span>
+                </div>
+            `;
+
+            document.getElementById('countdown').innerHTML = 
+                formatTime(days, 'Days') + 
+                '<span class="text-slate-700 -mt-6 text-xl">:</span>' +
+                formatTime(hours, 'Hrs') + 
+                '<span class="text-slate-700 -mt-6 text-xl hidden sm:inline">:</span>' +
+                formatTime(minutes, 'Min') + 
+                '<span class="text-slate-700 -mt-6 text-xl hidden sm:inline">:</span>' +
+                formatTime(seconds, 'Sec');
+        }
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        function copyEmail() {
+            const email = "uxidone@gmail.com"; 
+            
+            const textArea = document.createElement("textarea");
+            textArea.value = email;
+            
+            textArea.style.position = "fixed";
+            textArea.style.left = "-9999px";
+            textArea.style.top = "0";
+            document.body.appendChild(textArea);
+            
+            textArea.focus();
+            textArea.select();
+            
+            try {
+                const successful = document.execCommand('copy');
+                if (successful) {
+                    const toast = document.getElementById('toast');
+                    toast.classList.remove('translate-y-24', 'opacity-0');
+                    setTimeout(() => {
+                        toast.classList.add('translate-y-24', 'opacity-0');
+                    }, 3000);
+                }
+            } catch (err) {
+                console.error('Fallback: Unable to copy', err);
+            }
+            
+            document.body.removeChild(textArea);
+        }
+    </script>
+</body>
+</html>
